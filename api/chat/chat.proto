@@ -2,14 +2,13 @@ syntax = "proto3";
 
 package chat;
 
-import "google/protobuf/timestamp.proto";
 import "google/protobuf/empty.proto";
 
 option go_package = "github.com/vizurth/chat-server/pkg/chat;chat";
 
 service Chat {
   rpc Create(CreateRequest) returns (CreateResponse);
-  rpc Get(GetRequest) returns (google.protobuf.Empty);
+  rpc Get(GetRequest) returns (GetResponse);
   rpc SendMessage(SendMessageRequest) returns (google.protobuf.Empty);
 }
 
@@ -25,8 +24,12 @@ message GetRequest {
   int64 id = 1;
 }
 
+message GetResponse {
+  repeated string usernames = 1;
+}
+
 message SendMessageRequest {
-  string from = 1;
-  string text = 2;
-  google.protobuf.Timestamp timestamp = 3;
+  int64 chat_id = 1;
+  string sender = 2;
+  string content = 3;
 }
